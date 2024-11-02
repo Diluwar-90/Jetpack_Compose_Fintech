@@ -1,0 +1,9 @@
+<resources>
+    <string name="app_name">GrowwClone</string>
+    <string name="title_activity_sign_in">SignIn</string>
+    <string name="title_activity_dashboard_screen">DashboardScreen</string>
+    <string name="title_activity_buy_stock_screen">BuyStockScreen</string>
+    <string name="title_activity_stock_chart_screen">StockChartScreen</string>
+    <string name="title_activity_add_funds_screen">AddFundsScreen</string>
+    <string name="title_activity_app_navigation">AppNavigation</string>
+</resources>
