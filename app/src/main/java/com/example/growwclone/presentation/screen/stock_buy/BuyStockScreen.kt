@@ -1,4 +1,4 @@
-package com.example.growwclone.presentation.screen.stock
+package com.example.growwclone.presentation.screen.stock_buy
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
@@ -11,14 +11,11 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
-import androidx.navigation.NavController
-import androidx.navigation.NavHostController
 
 @Composable
-fun StockScreen(navController: NavHostController) {
-    Text(text = "Stock Screen")
-    //var stockName by remember { mutableStateOf("") }
-  /*  var quantity by remember { mutableStateOf("") }
+fun BuyStockScreen() {
+    var stockName by remember { mutableStateOf("") }
+    var quantity by remember { mutableStateOf("") }
 
     Column(modifier = Modifier.fillMaxSize()) {
         TextField(
@@ -36,5 +33,5 @@ fun StockScreen(navController: NavHostController) {
         }) {
             Text("Buy")
         }
-    }*/
+    }
 }
