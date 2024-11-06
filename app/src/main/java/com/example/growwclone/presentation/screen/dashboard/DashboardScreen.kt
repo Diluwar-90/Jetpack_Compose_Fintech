@@ -13,9 +13,10 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
+import androidx.navigation.NavHostController
 
 @Composable
-fun DashboardScreen() {
+fun DashboardScreen(navHostController: NavHostController) {
     val stocks = listOf(
         Stock("AAPL", 150.0, 2.3),
         Stock("GOOG", 2800.0, 1.8),
