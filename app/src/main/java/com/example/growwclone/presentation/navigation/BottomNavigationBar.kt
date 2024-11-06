@@ -20,9 +20,10 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.navigation.NavHostController
+import androidx.navigation.compose.currentBackStackEntryAsState
 
 @Composable
-fun BottomNavigationBar(navHostController: NavHostController) {
+fun BottomNavigationBar(navController: NavHostController) {
     //var selectedItem by remember { mutableIntStateOf(0) }
     val items = listOf(
         BottomNavItem.Home,
@@ -38,15 +39,28 @@ fun BottomNavigationBar(navHostController: NavHostController) {
         )
 
     NavigationBar {
+        val currentRoute = navController.currentBackStackEntryAsState().value?.destination?.route
         items.forEach { screen ->
             NavigationBarItem(
                 icon = { Icon(screen.icon, contentDescription = screen.title) },
                 label = { Text(screen.title) },
                 selected = selectedItem == screen.route,
                 alwaysShowLabel = true,
-                onClick = {
+                /*onClick = {
                     selectedItem = screen.route
-                    navHostController.navigate(screen.route)
+                    navController.navigate(screen.route)
+                }*/
+
+                onClick = {
+                    if (currentRoute != screen.route) {
+                        navController.navigate(screen.route) {
+                            popUpTo(navController.graph.startDestinationId) {
+                                saveState = true
+                            }
+                            launchSingleTop = true
+                            restoreState = true
+                        }
+                    }
                 }
             )
         }
