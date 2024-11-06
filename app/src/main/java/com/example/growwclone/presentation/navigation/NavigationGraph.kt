@@ -44,9 +44,7 @@ fun SetUpNavigationGraph(
             RegisterScreen(navHostController)
         }
 
-        composable(route = MainNavItems.StockScreen.route) {
-            StockScreen(navHostController)
-        }
+        composable(route = MainNavItems.StockScreen.route) {StockScreen(navHostController) }
         composable(route = MainNavItems.MutualFundScreen.route) { MutualFundScreen(navHostController) }
         composable(route = MainNavItems.AccountScreen.route) { AccountScreen(navHostController) }
         composable(route = MainNavItems.Dashboard.route) { DashboardScreen(navHostController) }

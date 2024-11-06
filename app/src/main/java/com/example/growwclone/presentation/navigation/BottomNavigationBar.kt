@@ -16,38 +16,37 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableIntStateOf
+import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.navigation.NavHostController
 
 @Composable
 fun BottomNavigationBar(navHostController: NavHostController) {
-    var selectedItem by remember { mutableIntStateOf(0) }
+    //var selectedItem by remember { mutableIntStateOf(0) }
     val items = listOf(
         BottomNavItem.Home,
         BottomNavItem.Stock,
         BottomNavItem.MutualFund,
         BottomNavItem.Account
     )
+    var selectedItem by remember { mutableStateOf(items[0].route) }
+
     val selectedIcons = listOf(Icons.Filled.Home, Icons.Filled.Star, Icons.Filled.Menu, Icons.Filled.AccountBox)
     val unselectedIcons =
         listOf(Icons.Outlined.Home, Icons.Outlined.Star, Icons.Outlined.Menu, Icons.Outlined.AccountBox
         )
 
     NavigationBar {
-        items.forEachIndexed { index, item ->
+        items.forEach { screen ->
             NavigationBarItem(
-                icon = {
-                    Icon(
-                        if (selectedItem == index) selectedIcons[index] else unselectedIcons[index],
-                        contentDescription = item.title
-                    )
-                },
-                label = { Text(item.title) },
-                selected = selectedItem == index,
+                icon = { Icon(screen.icon, contentDescription = screen.title) },
+                label = { Text(screen.title) },
+                selected = selectedItem == screen.route,
+                alwaysShowLabel = true,
                 onClick = {
-                    selectedItem = index
-                    navHostController.navigate(item.route)
+                    selectedItem = screen.route
+                    navHostController.navigate(screen.route)
                 }
             )
         }
