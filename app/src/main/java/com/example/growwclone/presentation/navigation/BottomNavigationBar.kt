@@ -1,52 +1,50 @@
 package com.example.growwclone.presentation.navigation
 
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Favorite
 import androidx.compose.material.icons.filled.Home
+import androidx.compose.material.icons.filled.Star
+import androidx.compose.material.icons.outlined.FavoriteBorder
+import androidx.compose.material.icons.outlined.Home
+import androidx.compose.material.icons.outlined.Star
 import androidx.compose.material3.Icon
+import androidx.compose.material3.NavigationBar
+import androidx.compose.material3.NavigationBarItem
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableIntStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.navigation.NavController
+import androidx.navigation.NavHostController
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 
 @Composable
 fun BottomNavigationBar(
-    currentRoute: String,
-    onNavigate: (String) -> Unit
+    navController: NavHostController,
+    items: List<BottomNavigationScreens>
 ) {
-    val navController = rememberNavController()
-    BottomNavigation {
-        val items = listOf(
-            NavigationGraph.HomeScreen,
-            NavigationGraph.StockScreen,
-            NavigationGraph.MutualFundScreen,
-            NavigationGraph.AccountScreen
-        )
-
-        items.forEach { screen ->
-            BottomNavigationItem(
-                icon = { Icon(Icons.Filled.Home, contentDescription = null) }, // Replace with appropriate icons
-                label = { Text(screen.route.replace("_", " ").capitalize()) },
-                selected = currentRoute == screen.route,
-                onClick = {
-                    onNavigate(screen.route)
-                }
+    var selectedItem by remember { mutableIntStateOf(0) }
+    val selectedIcons = listOf(Icons.Filled.Home, Icons.Filled.Favorite, Icons.Filled.Star)
+    val unselectedIcons =
+        listOf(Icons.Outlined.Home, Icons.Outlined.FavoriteBorder, Icons.Outlined.Star)
+    NavigationBar {
+        items.forEachIndexed { index, item ->
+            NavigationBarItem(
+                icon = {
+                    Icon(
+                        if (selectedItem == index) selectedIcons[index] else unselectedIcons[index],
+                        contentDescription = item.resourceId
+                    )
+                },
+                label = { Text(item.resourceId) },
+                selected = selectedItem == index,
+                onClick = { selectedItem = index }
             )
         }
     }
 }
 
-@Composable
-fun BottomNavigationItem(
-    icon: @Composable () -> Unit,
-    label: @Composable () -> Unit,
-    selected: Boolean,
-    onClick: () -> Unit
-) {
-    TODO("Not yet implemented")
-}
 
-@Composable
-fun BottomNavigation(content: @Composable () -> Unit) {
-
-}

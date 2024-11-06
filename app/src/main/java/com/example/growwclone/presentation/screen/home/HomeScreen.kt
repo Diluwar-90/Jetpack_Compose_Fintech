@@ -2,32 +2,45 @@ package com.example.growwclone.presentation.screen.home
 
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.wrapContentSize
-import androidx.compose.material3.Button
-import androidx.compose.material3.Text
+import androidx.compose.foundation.layout.padding
+import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
-import com.example.growwclone.presentation.navigation.NavigationGraph
+import androidx.navigation.compose.rememberNavController
+import com.example.growwclone.presentation.navigation.BottomNavigationBar
+import com.example.growwclone.presentation.navigation.BottomNavigationScreens
+import com.example.growwclone.presentation.navigation.SetUpNavigationGraph
 
 @Composable
 fun HomeScreen(
     navHostController: NavHostController,
     homeViewModel: HomeViewModel = hiltViewModel()
 ) {
-    Box(modifier = Modifier.fillMaxSize()) {
-        Button(
-            onClick = {
-                homeViewModel.logout()
-                navHostController.navigate(NavigationGraph.LoginScreen.route) { popUpTo(0) }
-            },
+    val navController = rememberNavController()
+
+    val bottomNavigationItems = listOf(
+        BottomNavigationScreens.HomeScreen,
+        BottomNavigationScreens.StockScreen,
+        BottomNavigationScreens.MutualFundScreen,
+        BottomNavigationScreens.AccountScreen
+    )
+
+    Scaffold(
+        bottomBar = {
+            BottomNavigationBar(navController, bottomNavigationItems)
+        },
+    ) { innerPadding->
+        Box(
             modifier = Modifier
-                .wrapContentSize()
-                .align(Alignment.Center)
-        ) {
-            Text(text = "Logout")
+                .fillMaxSize()
+                .padding(innerPadding) // Apply innerPadding to avoid content being obscured
+        ){
+           // SetUpNavigationGraph()
         }
+
     }
+
+
 }

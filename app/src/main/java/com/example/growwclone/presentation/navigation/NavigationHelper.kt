@@ -54,12 +54,12 @@ fun SetUpNavigationGraph(
     val currentBackStackEntry by navHostController.currentBackStackEntryAsState()
     val currentRoute = currentBackStackEntry?.destination?.route ?: NavigationGraph.HomeScreen.route
 
-    BottomNavigationBar(currentRoute) { route ->
+   /* BottomNavigationBar(currentRoute) { route ->
         navHostController.navigate(route) {
             // Clear back stack to prevent multiple copies of screens
             popUpTo(navHostController.graph.startDestinationId) { saveState = true }
             launchSingleTop = true
             restoreState = true
         }
-    }
+    }*/
 }
