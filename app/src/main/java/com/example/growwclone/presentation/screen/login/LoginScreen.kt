@@ -42,7 +42,7 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
 import com.example.growwclone.core.Response
-import com.example.growwclone.presentation.navigation.NavigationGraph
+import com.example.growwclone.presentation.navigation.MainNavItems
 import com.example.growwclone.presentation.screen.common.MyAlertDialog
 import com.example.growwclone.presentation.screen.common.MyCircularProgress
 import com.google.firebase.auth.AuthResult
@@ -67,10 +67,10 @@ fun LoginScreen(
             paddingValues = paddingValues,
             signInStateFlow = loginViewModel.loginFlow,
             resetPasswordStateFlow = loginViewModel.resetPasswordFlow,
-            onRegisterNow = { navHostController.navigate(NavigationGraph.RegisterScreen.route) },
+            onRegisterNow = { navHostController.navigate(MainNavItems.RegisterScreen.route) },
             onForgotPassword = { email -> loginViewModel.resetPassword(email) },
             onLogin = { email, password -> loginViewModel.login(email, password) },
-            loginSuccess = { navHostController.navigate(NavigationGraph.HomeScreen.route) { popUpTo(0) } }
+            loginSuccess = { navHostController.navigate(MainNavItems.HomeScreen.route) { popUpTo(0) } }
         )
     }
 }

@@ -1,11 +1,13 @@
 package com.example.growwclone.presentation.navigation
 
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Favorite
+import androidx.compose.material.icons.filled.AccountBox
 import androidx.compose.material.icons.filled.Home
+import androidx.compose.material.icons.filled.Menu
 import androidx.compose.material.icons.filled.Star
-import androidx.compose.material.icons.outlined.FavoriteBorder
+import androidx.compose.material.icons.outlined.AccountBox
 import androidx.compose.material.icons.outlined.Home
+import androidx.compose.material.icons.outlined.Menu
 import androidx.compose.material.icons.outlined.Star
 import androidx.compose.material3.Icon
 import androidx.compose.material3.NavigationBar
@@ -14,37 +16,53 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableIntStateOf
+import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
-import androidx.navigation.NavController
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.currentBackStackEntryAsState
-import androidx.navigation.compose.rememberNavController
 
 @Composable
-fun BottomNavigationBar(
-    navController: NavHostController,
-    items: List<BottomNavigationScreens>
-) {
-    var selectedItem by remember { mutableIntStateOf(0) }
-    val selectedIcons = listOf(Icons.Filled.Home, Icons.Filled.Favorite, Icons.Filled.Star)
+fun BottomNavigationBar(navController: NavHostController) {
+    //var selectedItem by remember { mutableIntStateOf(0) }
+    val items = listOf(
+        BottomNavItem.Home,
+        BottomNavItem.Stock,
+        BottomNavItem.MutualFund,
+        BottomNavItem.Account
+    )
+    var selectedItem by remember { mutableStateOf(items[0].route) }
+
+    val selectedIcons = listOf(Icons.Filled.Home, Icons.Filled.Star, Icons.Filled.Menu, Icons.Filled.AccountBox)
     val unselectedIcons =
-        listOf(Icons.Outlined.Home, Icons.Outlined.FavoriteBorder, Icons.Outlined.Star)
+        listOf(Icons.Outlined.Home, Icons.Outlined.Star, Icons.Outlined.Menu, Icons.Outlined.AccountBox
+        )
+
     NavigationBar {
-        items.forEachIndexed { index, item ->
+        val currentRoute = navController.currentBackStackEntryAsState().value?.destination?.route
+        items.forEach { screen ->
             NavigationBarItem(
-                icon = {
-                    Icon(
-                        if (selectedItem == index) selectedIcons[index] else unselectedIcons[index],
-                        contentDescription = item.resourceId
-                    )
-                },
-                label = { Text(item.resourceId) },
-                selected = selectedItem == index,
-                onClick = { selectedItem = index }
+                icon = { Icon(screen.icon, contentDescription = screen.title) },
+                label = { Text(screen.title) },
+                selected = selectedItem == screen.route,
+                alwaysShowLabel = true,
+                /*onClick = {
+                    selectedItem = screen.route
+                    navController.navigate(screen.route)
+                }*/
+
+                onClick = {
+                    if (currentRoute != screen.route) {
+                        navController.navigate(screen.route) {
+                            popUpTo(navController.graph.startDestinationId) {
+                                saveState = true
+                            }
+                            launchSingleTop = true
+                            restoreState = true
+                        }
+                    }
+                }
             )
         }
     }
 }
-
-

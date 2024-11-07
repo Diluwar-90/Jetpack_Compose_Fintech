@@ -40,10 +40,9 @@ import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
-import androidx.lifecycle.ViewModel
 import androidx.navigation.NavHostController
 import com.example.growwclone.core.Response
-import com.example.growwclone.presentation.navigation.NavigationGraph
+import com.example.growwclone.presentation.navigation.MainNavItems
 import com.example.growwclone.presentation.screen.common.MyCircularProgress
 import com.google.firebase.auth.AuthResult
 import kotlinx.coroutines.flow.MutableSharedFlow
@@ -82,7 +81,7 @@ fun RegisterScreen(
             registerFlowState = registerViewModel.registerFlow,
             onNavigateToLogin = { navHostController.popBackStack() },
             onRegister = { email, password -> registerViewModel.register(email, password) },
-            registerSuccess = { navHostController.navigate(NavigationGraph.HomeScreen.route) },
+            registerSuccess = { navHostController.navigate(MainNavItems.HomeScreen.route) },
             registerError = { scope.launch { hostState.showSnackbar("Oops! something went wrong, check your connection and try again") } }
         )
     }
